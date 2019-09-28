@@ -9,30 +9,9 @@
     } else {
         die('Could not find autoload.php, did you run "composer install" ..?');
     }
-        
-    // Load Symfony
-    global $known_loader;
-    $known_loader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
-    $known_loader->register();
-
-    /**
-     * Retrieve the loader
-     * @return \Symfony\Component\ClassLoader\UniversalClassLoader
-     */
-function &loader()
-{
-    global $known_loader;
-
-    return $known_loader;
-}
 
     // Register console namespace
     use Symfony\Component\Console\Application;
-
-
-    // Known core namespaces
-    $known_loader->registerNamespace('Idno', dirname(__FILE__));
-    $known_loader->registerNamespace('ConsolePlugins', dirname(__FILE__));
 
     // Create new console application
     global $console;

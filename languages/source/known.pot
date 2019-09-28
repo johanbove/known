@@ -322,7 +322,7 @@ msgstr ""
 msgid "Homepage"
 msgstr ""
 
-#: ./Idno/Pages/Admin/Homepage.php:44
+#: ./Idno/Pages/Admin/Homepage.php:42
 msgid "The default homepage content types were saved."
 msgstr ""
 
@@ -546,27 +546,27 @@ msgstr ""
 msgid "There was a problem syndicating."
 msgstr ""
 
-#: ./Idno/Common/Plugin.php:76
+#: ./Idno/Common/Plugin.php:87
 msgid "Plugin %s doesn\'t have a version"
 msgstr ""
 
-#: ./Idno/Common/Page.php:359
+#: ./Idno/Common/Page.php:390
 msgid "Invalid token."
 msgstr ""
 
-#: ./Idno/Common/Page.php:376
+#: ./Idno/Common/Page.php:407
 msgid "Something went wrong."
 msgstr ""
 
-#: ./Idno/Common/Page.php:433
+#: ./Idno/Common/Page.php:464
 msgid "Attempted to redirect page to a non local URL."
 msgstr ""
 
-#: ./Idno/Common/Page.php:523
+#: ./Idno/Common/Page.php:554
 msgid "The page you were on timed out."
 msgstr ""
 
-#: ./Idno/Common/Page.php:537
+#: ./Idno/Common/Page.php:568
 msgid "Couldn't say anything about execution, probably something went wrong"
 msgstr ""
 
@@ -983,7 +983,7 @@ msgid "Open source project details"
 msgstr ""
 
 #: ./templates/default/admin/about.tpl.php:20
-msgid "Version: %s"
+msgid "Version: %s+%s"
 msgstr ""
 
 #: ./templates/default/admin/menu.tpl.php:2
@@ -1695,11 +1695,11 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: ./templates/default/account/login.tpl.php:35
+#: ./templates/default/account/login.tpl.php:36
 msgid "New here? Register for an account."
 msgstr ""
 
-#: ./templates/default/account/login.tpl.php:39
+#: ./templates/default/account/login.tpl.php:40
 msgid "Forgot your password?"
 msgstr ""
 
@@ -1963,7 +1963,7 @@ msgstr ""
 msgid "Just enter the email address associated with your %s account below, and we'll send you a top secret link to your email account so that you can create a new password."
 msgstr ""
 
-#: ./templates/default/account/password.tpl.php:26
+#: ./templates/default/account/password.tpl.php:27
 msgid "Send password reset email"
 msgstr ""
 
@@ -2127,11 +2127,11 @@ msgstr ""
 msgid "Add the address of a site to follow"
 msgstr ""
 
-#: ./known.php:131
+#: ./known.php:110
 msgid "Returns the current Known version as defined in version.known"
 msgstr ""
 
-#: ./known.php:139
+#: ./known.php:118
 msgid "WARNING: Your build of Known is behind the latest version from Github (%s - %s). If you're having problems, you may want to try updating to the latest version.\nUpdate now: https://github.com/idno/Known\n"
 msgstr ""
 

@@ -42,6 +42,10 @@ namespace Idno\Common {
         // to no, but you can use $this->setPermalink() to change this
         private $isPermalinkPage = false;
 
+        // If this page is associated with a particular entity, we'll
+        // store it here so we can access it in shell templates etc
+        private $entity = null;
+
         // Is this an XmlHTTPRequest (AJAX) call?
         public $xhr = false;
 
@@ -147,7 +151,7 @@ namespace Idno\Common {
          *
          * @param int $code
          */
-        function setResponse($code)
+        function setResponse(int $code)
         {
             $code           = (int)$code;
             $this->response = $code;
@@ -240,7 +244,7 @@ namespace Idno\Common {
          * Provide access to page data
          * @return array
          */
-        function &data()
+        function &data() : array
         {
             return $this->data;
         }
@@ -439,7 +443,7 @@ namespace Idno\Common {
          * @param string $location Location to forward to (eg "/foo/bar")
          * @param bool $exit If set to true (which it is by default), execution finishes once the header is sent.
          */
-        function forward($location = '', $exit = true)
+        function forward(string $location = '', bool $exit = true)
         {
             if (empty($location)) {
                 $location = \Idno\Core\Idno::site()->config()->getDisplayURL();
@@ -848,13 +852,39 @@ namespace Idno\Common {
         }
 
         /**
-         * Is this page a permalink for an object? This should be set to 'true'
-         * if it is.
-         * @param bool $status Is this a permalink? Defaults to 'true'
+         * Sets the entity on the page to the specified object
+         * @param object $entity
          */
-        function setPermalink($status = true)
+        function setEntity($entity) {
+            $this->entity = $entity;
+        }
+
+        /**
+         * Returns the entity associated with this page, if it exists
+         * @return \Idno\Common\Entity|null
+         */
+        function getEntity(): ?Entity
+        {
+            return $this->entity;
+        }
+
+        /**
+         * Removes any entity associated with this page
+         */
+        function removeEntity() {
+            $this->entity = null;
+        }
+
+        /**
+         * Is this page a permalink for an object? This should be set to 'true'
+         * if it is. Optionally, we can also associate the page with the object here.
+         * @param bool $status Is this a permalink? Defaults to 'true'
+         * @param object $entity Optionally, an entity this page is associated with
+         */
+        function setPermalink(bool $status = true, Entity $entity = null)
         {
             $this->isPermalinkPage = $status;
+            if ($status && $entity) $this->setEntity($entity);
         }
 
         /**
@@ -1079,7 +1109,7 @@ namespace Idno\Common {
          * @param type $class Class of asset (e.g. 'javascript', 'css')
          * @param type $value A URL or other value
          */
-        public function setAsset($name, $value, $class)
+        public function setAsset(string $name, string $value, string $class)
         {
             if (!isset($this->assets) || !is_array($this->assets)) $this->assets = array();
             if (!isset($this->assets[$class]) || !is_array($this->assets)) $this->assets[$class] = array();
@@ -1092,7 +1122,7 @@ namespace Idno\Common {
          * @param type $class
          * @return array
          */
-        public function getAssets($class)
+        public function getAssets(string $class)
         {
             if (isset($this->assets[$class])) {
                 return $this->assets[$class];
@@ -1160,7 +1190,7 @@ namespace Idno\Common {
          * Takes a unix timestamp and outputs it as RFC2616 date.
          * @param int $timestamp Unix timestamp.
          */
-        public function setLastModifiedHeader($timestamp)
+        public function setLastModifiedHeader(int $timestamp)
         {
             header('Last-Modified: ' . \Idno\Core\Time::timestampToRFC2616($timestamp));
         }

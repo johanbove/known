@@ -49,7 +49,7 @@ if (!empty($vars['label'])) {
         <div class="required-text alert alert-danger" style="display:none;"><?php echo \Idno\Core\Idno::site()->language()->_('Please complete this field.'); ?></div>
     <?php } ?>
         <br />
-</div>    
+</div>
 
 <script>
 
@@ -76,6 +76,7 @@ if (!empty($vars['label'])) {
             convert_urls : true,
             valid_children : "+body[style]",
             invalid_elements: 'div,section',
+            extended_valid_elements: 'frame[src|width|height|frameborder|allow|allowfullscreen]',
             valid_styles : 'font-style,color,text-align,text-decoration,float,display,margin-left,margin-right',
             file_picker_callback: function (callback, value, meta) {
                 filePickerDialog(callback, value, meta);

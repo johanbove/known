@@ -20,14 +20,14 @@ namespace Idno\Common {
     {
 
         // Which collection should this be stored in?
-        public $collection = 'entities';
+        private $collection = 'entities';
         static $retrieve_collection = 'entities';
 
         // Optional entity cache
-        static $entity_cache = [];
+        private static $entity_cache = [];
 
         // Store the entity's attributes
-        public $attributes = array(
+        private $attributes = array(
             'access' => 'PUBLIC' // All entites are public by default
         );
 
@@ -134,7 +134,7 @@ namespace Idno\Common {
          * @param array $search List of filter terms (default: none)
          * @return int
          */
-        static function count($search = array())
+        static function count($search = array()): int
         {
             return \Idno\Core\Idno::site()->db()->countObjects(get_called_class(), $search);
         }
@@ -145,7 +145,7 @@ namespace Idno\Common {
          * @param array $search
          * @return int
          */
-        static function countFromAll($search = array())
+        static function countFromAll($search = array()): int
         {
             return static::countFromX('', $search);
         }
@@ -157,7 +157,7 @@ namespace Idno\Common {
          * @param array $search List of filter terms (default: none)
          * @return int
          */
-        static function countFromX($class, $search = array())
+        static function countFromX($class, $search = array()): int
         {
             return \Idno\Core\Idno::site()->db()->countObjects($class, $search);
         }
@@ -1248,7 +1248,7 @@ namespace Idno\Common {
         {
             if ($body = $this->getBody()) {
                 $body = strip_tags($body);
-                $words = str_word_count($body);
+                $words = count(preg_split('~[^\p{L}\p{N}\']+~u', $body)); // ht cito from https://www.php.net/manual/en/function.str-word-count.php
 
                 return (int)ceil(($words / 200) * 60);
             }
@@ -1671,9 +1671,15 @@ namespace Idno\Common {
 
             if (!empty($suffix)) $suffix = '/' . $suffix;
 
-            $return = $t->__($params)->draw('entity/' . $this->getClassName() . $suffix, false);
-            if ($return === false) {
-                $return = $t->__($params)->draw('entity/default');
+            $view_name = 'entity/' . $this->getClassName(true) . $suffix;
+
+            $return = Idno::site()->events()->triggerEvent('entity/draw', ['feed_view' => $feed_view, 'view' => $view_name, 'object' => $this], false);
+
+            if (!$return) {
+                $return = $t->__($params)->draw($view_name, false);
+                if ($return === false) {
+                    $return = $t->__($params)->draw('entity/default');
+                }
             }
 
             return $return;
@@ -1689,9 +1695,14 @@ namespace Idno\Common {
         {
             $t = \Idno\Core\Idno::site()->template();
 
-            $return = $t->__(array(
-                'object' => $this
-            ))->draw('entity/' . $this->getFullClassName(true) . '/edit');
+            $view_name = 'entity/' . $this->getClassName(true) . '/edit';
+            $return = Idno::site()->events()->triggerEvent('entity/drawEdit', ['view' => $view_name, 'object' => $this], false);
+
+            if (!$return) {
+                $return = $t->__(array(
+                    'object' => $this
+                ))->draw('entity/' . $this->getFullClassName(true) . '/edit');
+            }
 
             if ($return === false) {
                 $return = $t->__(array(

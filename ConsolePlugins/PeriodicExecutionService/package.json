@@ -1,7 +1,7 @@
 {
   "name": "PeriodicExecutionService",
-  "version": "0.9.9-a",
+  "version": "0.9.10",
   "devDependencies": {
-    "grunt": "^0.4.5"
+    "grunt": "^1.0.3"
   }
 }

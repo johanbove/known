@@ -1,5 +1,5 @@
 <!-- We need jQuery at the top of the page -->
-<script src="<?php echo \Idno\Core\Idno::site()->config()->getStaticURL() ?>vendor/components/jquery/jquery.min.js"></script>
+<script src="<?php echo \Idno\Core\Idno::site()->config()->getStaticURL() ?>vendor/npm-asset/jquery/dist/jquery.min.js"></script>
 
 <!-- Le styles -->
 <link
@@ -18,10 +18,9 @@
 
 <!-- Fonts -->
 <link rel="stylesheet"
-    href="<?php echo \Idno\Core\Idno::site()->config()->getStaticURL() ?>vendor/fortawesome/font-awesome/css/all.min.css">
+    href="<?php echo \Idno\Core\Idno::site()->config()->getStaticURL() ?>vendor/forkawesome/fork-awesome/css/fork-awesome.min.css">
 <link rel="stylesheet"
-    href="<?php echo \Idno\Core\Idno::site()->config()->getStaticURL() ?>vendor/fortawesome/font-awesome/css/v4-shims.min.css">
-
+    href="<?php echo \Idno\Core\Idno::site()->config()->getStaticURL() ?>vendor/forkawesome/fork-awesome/css/v5-compat.min.css">
 <style>
     body {
         padding-top: 100px; /* 60px to make the container go all the way to the bottom of the topbar */

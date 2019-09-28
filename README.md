@@ -16,7 +16,7 @@ web hosting provider.
 
 ### Installing
 
-Known is under active development and requires PHP 7+ with selected extensions, together with a supported database backend. You can find detailed installation instructions here: <http://docs.withknown.com/en/latest/install/index.html>
+Known is under active development and requires PHP 7.1+ with selected extensions, together with a supported database backend. You can find detailed installation instructions here: <http://docs.withknown.com/en/latest/install/index.html>
 
 #### Installing from packages
 
@@ -24,7 +24,7 @@ _Unofficial_ install packages, which are periodically built from the latest code
 
 #### Installing from Github
 
-You can opt to check out the work-in-progress development code from the git repository: <https://github.com/idno/Known>
+You can opt to check out the work-in-progress development code from the git repository: <https://github.com/idno/known>
 
 * Check out the repo: ```git clone https://github.com/idno/known.git```
 * Fetch dependencies: ```cd known; composer install```
@@ -104,12 +104,11 @@ Third party libraries are licensed separately.
 * Twitter Bootstrap, which is distributed under the Apache 2.0 license. Source: https://github.com/twitter/bootstrap
 * jQuery, which is distributed under the MIT License. Source: https://github.com/jquery/jquery
 * Portions of Symfony, which is distributed under the MIT license.
-  * ClassLoader. Source: https://github.com/symfony/ClassLoader
   * EventDispatcher. Source: https://github.com/symfony/EventDispatcher
   * HttpFoundation. Source: https://github.com/symfony/HttpFoundation
   * Console. Source: https://github.com/symfony/console
 * ToroPHP, which is distributed under the MIT License. Source: https://github.com/anandkunal/ToroPHP/
-* Font Awesome, which is distributed under the Open Font License, version 1.1: http://fortawesome.github.io/Font-Awesome/
+* Fork Awesome, which is distributed under the Open Font License, version 1.1: https://github.com/ForkAwesome/Fork-Awesome
 * Steve Clay's AutoP, which is distributed under the MIT License. Source: https://code.google.com/p/mrclay/
 * Aaron Parecki's Webmention Client, which is distributed under the Apache 2.0 license. Source: https://github.com/aaronpk/mention-client
 * Barnaby Walters's Microformats 2 Parser, which is distributed under the MIT License. Source: https://github.com/indieweb/php-mf2

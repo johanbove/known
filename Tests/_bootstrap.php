@@ -1,8 +1,6 @@
 <?php
 
 
-require_once(dirname(__FILE__) . '/_shims.php');
-
 define('KNOWN_UNIT_TEST', true);
 
 // Set some environment: Use export KNOWN_DOMAIN / KNOWN_PORT to override from the command line
@@ -25,12 +23,6 @@ try {
 
     // Load Known framework
     require_once(dirname(dirname(__FILE__)) . '/Idno/start.php');
-
-    // Register test classes with class loader
-    loader()->registerNamespace('Tests', dirname(dirname(__FILE__)));
-
-    // TODO: Initialise and populate test DB
-
 
 } catch (Exception $ex) {
     echo $ex->getMessage();

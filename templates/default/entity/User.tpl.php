@@ -21,8 +21,9 @@ if (empty($vars['user']) && !empty($vars['object'])) {
         <div class="row">
             <div class="col-md-4 namebadge">
                 <p>
-                    <a href="<?php echo $vars['user']->getDisplayURL() ?>" class="u-url icon-container"><img class="u-photo"
-                                                                                               src="<?php echo $vars['user']->getIcon() ?>"/></a>
+                    <a href="<?php echo $vars['user']->getDisplayURL() ?>" class="u-url icon-container">
+                        <img class="u-photo" src="<?php echo $vars['user']->getIcon() ?>" alt="<?php echo htmlentities(strip_tags($vars['user']->getTitle()), ENT_QUOTES, 'UTF-8') ?>" />
+                    </a>
                 </p>
 
                         <?php
@@ -39,7 +40,7 @@ if (empty($vars['user']) && !empty($vars['object'])) {
 
                         ?>
                     </div>
-            
+
             <div class="col-md-8 namebadge-profile">
                 <div class="row">
                     <div class="col-md-12">

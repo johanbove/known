@@ -1,28 +1,59 @@
 /**
  * Gruntfile for Known project.
+ * 
+ * This is a grunt task for building various aspects of Known. You'll only need to 
+ * use this if you're a developer working on the core.
+ * 
+ * Installation
+ * 
+ *  - npm i 
+ * 
+ * Useful tasks:
+ * 
+ *  - grunt - builds everything
+ *  - grunt build-lang - recompiles gettext corpus (make sure you composer install before hand to get the build scripts!)
+ *  - grunt build-css - Compile the SASS
+ *  - grunt build-js - minify javascript and pass it through babel
+ *  - grunt test - lint your js and css
+ *  - grunt watch - look for changes and recompile as needed (useful for development)
  */
+
+/*jshint ignore:start*/
+const sass = require('node-sass'); // Use Node SASS (wrapper around libsass)
+/*jshint ignore:end*/
 
 module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     sass: {
-	dist: {
+	options: {
+	    sourcemap: 'none',
+	    implementation: sass,
+	    noCache: true
+	},
+	dev: {
 	    files: {
 	        'css/known.css': 'css/scss/known.scss',
 		'css/known-simple.css': 'css/scss/known-simple.scss'
 	    },
+	},
+	dist: {
+	    files: {
+	        'css/known.min.css': 'css/scss/known.scss',
+		'css/known-simple.min.css': 'css/scss/known-simple.scss'
+	    },
 	    options: {
-		sourcemap: 'none'
+	      outputStyle: 'compressed'
 	    }
 	}
     },
-    uglify: {
+    concat: {
       options: {
       },
       js: {
         files: {
-          'js/known.min.js': [
+          'js/known.es6': [
 	      'js/src/classes/Security.js',
 	      'js/src/classes/Logger.js',
 	      'js/src/classes/Notifications.js',
@@ -33,39 +64,52 @@ module.exports = function (grunt) {
 	      'js/src/classes/Template.js',
 	      'js/src/lib/Template.js',
 	  ],
-          'js/service-worker.min.js': [
+          'js/service-worker.es6': [
 	      'js/src/ServiceWorker.js'
 	  ]
         }
       }
     },
-    cssmin: {
-      target: {
-        files: [{
-          expand: true,
-          cwd: 'css/',
-          src: ['*.css', '!*.min.css'],
-          dest: 'css/',
-          ext: '.min.css'
-        }]
-      }
+    babel: {
+	options: {
+	    sourceType: "script"
+	},
+	dist: {
+	    files: [
+		{
+		    expand: true,
+		    cwd: 'js/',
+		    src: ['*.es6'],
+		    dest: 'js/',
+		    ext: '.js'
+		}]
+	},
+    },
+    terser: {
+	options: {
+	},
+	dist: {
+	    files: [{
+		expand: true,
+		cwd: "js/",
+		src: ["*.js", "!*.min.js"],
+		dest: "js",
+		ext: ".min.js"
+	    }]
+	},
     },
     csslint: {
       options: {
         quiet: true,
         ids: false
       },
-      src: ['css/*.css']
+      src: ['css/*.css', '!*.min.css']
     },
     jshint: {
       // define the files to lint
       files: [
-        'Gruntfile.js',
-        'js/default.js',
-        'js/embeds.js',
-        'js/image.js',
-        'js/service-worker.js',
-        'js/templates/default/shell.js'
+            'Gruntfile.js',
+            'js/src/**/*.js'
       ],
 
       // configure JSHint (documented at http://www.jshint.com/docs/)
@@ -93,16 +137,29 @@ module.exports = function (grunt) {
       }
     },
     watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint']
+        options: {
+          dateFormat: function(time) {
+            grunt.log.writeln('The watch finished in ' + time + 'ms at ' + (new Date()).toString());
+            grunt.log.writeln('Waiting for more changes...');
+          },
+        },
+        sass: {
+            files: 'css/scss/**/*.scss',
+            tasks:  ['build-css', 'csslint']
+        },
+        js: {
+            files: ['js/src/**/*.js', 'Gruntfile.js'],
+            tasks:  ['build-js', 'jshint']
+        } 
     }
 
   });
 
 // Load the plugins
-  grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-babel');
+  grunt.loadNpmTasks('grunt-terser');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-csslint');
@@ -113,7 +170,9 @@ module.exports = function (grunt) {
 // Build language pack
   grunt.registerTask('build-lang', '', function () {
 
+    /*jshint ignore:start*/
     const {execSync} = require('child_process');
+    /*jshint ignore:end*/
 
     var pot = grunt.config.get('pkg.name').toLowerCase() + '.pot';
     
@@ -129,5 +188,7 @@ module.exports = function (grunt) {
   });
 
 // Default task(s).
-  grunt.registerTask('default', ['sass', 'cssmin', 'uglify']);
+  grunt.registerTask('build-js', ['concat', 'babel', 'terser']);
+  grunt.registerTask('build-css', ['sass']);
+  grunt.registerTask('default', ['build-js', 'build-css', 'build-lang', 'test']);
 };

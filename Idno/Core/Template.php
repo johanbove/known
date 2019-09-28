@@ -383,7 +383,7 @@ namespace Idno\Core {
                     $result .= " target=\"_blank\" ";
                 }
                 if ($code) {
-                    $result .= ' ' . str_replace("%URL%", $url, addslashes($code));
+                    $result .= ' ' . str_replace("%URL%", $url, $code);
                 }
                 $result .= ">";
                 $result .= preg_replace('/([\/=]+)/', '${1}<wbr />', Template::sampleTextChars($url, 100));
@@ -501,6 +501,7 @@ namespace Idno\Core {
          */
         function fixURL($url)
         {
+            // Keep in sync with icon code in templates/default/entity/User/profile/fields.tpl.php
             return (
                 substr($url, 0, 7) == 'http://' ||
                 substr($url, 0, 8) == 'https://' ||
@@ -514,6 +515,8 @@ namespace Idno\Core {
                 substr($url, 0, 4) == 'ssh:' ||
                 substr($url, 0, 8) == 'spotify:' ||
                 substr($url, 0, 8) == 'bitcoin:' ||
+                substr($url, 0, 9) == 'ethereum:' ||
+                substr($url, 0, 4) == 'ssb:' ||
                 substr($url, 0, 9) == 'facetime:'
             )
                 ? $url

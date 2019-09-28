@@ -26,6 +26,8 @@ namespace Idno\Pages\Webmentions {
 
             parse_str(trim(file_get_contents("php://input")), $vars);
 
+            $contentType = $vars['content-type'];
+
             // Check that both source and target are non-empty
             if (!empty($vars['source']) && !empty($vars['target']) && $vars['source'] != $vars['target']) {
 
@@ -49,11 +51,11 @@ namespace Idno\Pages\Webmentions {
                 }
 
                 // Get the page handler for target
-                if ($page = \Idno\Core\Idno::site()->getPageHandler($route)) {
+                if ($page = \Idno\Core\Idno::site()->routes()->getRoute($route)) {
                     // First of all, make sure the target page isn't the source page. Let's not webmention ourselves!
                     $webmention_ok = true;
                     if (\Idno\Common\Entity::isLocalUUID($source)) {
-                        if ($source_page = \Idno\Core\Idno::site()->getPageHandler($source)) {
+                        if ($source_page = \Idno\Core\Idno::site()->routes()->getRoute($source)) {
                             if ($source_page == $page) {
                                 $webmention_ok = false;
                             }
@@ -71,6 +73,9 @@ namespace Idno\Pages\Webmentions {
                                 $page->setPermalink();
                                 if ($page->webmentionContent($source, $target, $source_response, $source_mf2)) {
                                     $this->setResponse(202); // Webmention received a-ok.
+                                    if (!empty($contentType) && $contentType == 'html') {
+                                        echo 'Webmention received a-ok!';
+                                    }
                                     exit;
                                 } else {
                                     $error      = 'source_not_supported';

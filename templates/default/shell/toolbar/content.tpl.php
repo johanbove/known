@@ -34,6 +34,7 @@ if (!empty($content_types)) {
 
                     echo $this->__(array( 'search' => $search ))->draw("shell/toolbar/content/default");
                     echo $this->__(array( 'search' => $search ))->draw("shell/toolbar/content/all");
+                    echo $this->__(array( 'search' => $search ))->draw("shell/toolbar/content/replies");
 
                     foreach ($content_types as $content_type) {
 

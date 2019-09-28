@@ -1,0 +1,61 @@
+$ composer install
+Loading composer repositories with package information
+Updating dependencies (including require-dev)
+Package operations: 43 installs, 0 updates, 0 removals
+  - Installing psr/log (1.1.0): Loading from cache
+  - Installing torophp/torophp (dev-master 4e5f538): Cloning 4e5f5388b2
+  - Installing swiftmailer/swiftmailer (v5.2.1): Loading from cache
+  - Installing forkawesome/fork-awesome (1.1.7): Downloading (100%)
+  - Installing twbs/bootstrap (v3.4.1): Downloading (100%)
+  - Installing ezyang/htmlpurifier (v4.10.0): Loading from cache
+  - Installing components/jquery (3.3.1): Downloading (100%)
+  - Installing rmm5t/jquery-timeago (v1.6.7): Downloading (100%)
+  - Installing tinymce/tinymce (5.0.5): Downloading (100%)
+  - Installing symfony/class-loader (v3.4.28): Downloading (100%)
+  - Installing symfony/event-dispatcher-contracts (v1.1.1): Downloading (100%)
+  - Installing symfony/event-dispatcher (v4.3.0): Downloading (100%)
+  - Installing symfony/service-contracts (v1.1.2): Downloading (100%)
+  - Installing symfony/polyfill-php73 (v1.11.0): Downloading (100%)
+  - Installing symfony/polyfill-mbstring (v1.11.0): Loading from cache
+  - Installing symfony/console (v4.3.0): Downloading (100%)
+  - Installing symfony/polyfill-php72 (v1.11.0): Downloading (100%)
+  - Installing symfony/polyfill-intl-idn (v1.11.0): Downloading (100%)
+  - Installing symfony/mime (v4.3.1): Downloading (100%)
+  - Installing symfony/http-foundation (v4.3.0): Downloading (100%)
+  - Installing simplepie/simplepie (1.5.2): Downloading (100%)
+  - Installing mapkyca/mrclay_autop_known (dev-master d9e3241): Cloning d9e3241aca
+  - Installing npm-asset/underscore (1.6.0): Loading from cache
+  - Installing npm-asset/bootstrap-accessibility-plugin (v1.0.7): Downloading (100%)
+  - Installing npm-asset/bootstrap-toggle (2.2.2): Downloading (100%)
+  - Installing npm-asset/exif-js (2.3.0): Loading from cache
+  - Installing npm-asset/jquery (3.4.1): Downloading (100%)
+  - Installing npm-asset/dom-walk (0.1.1): Loading from cache
+  - Installing npm-asset/min-document (2.19.0): Loading from cache
+  - Installing npm-asset/process (0.11.10): Downloading (100%)
+  - Installing npm-asset/global (4.4.0): Downloading (100%)
+  - Installing npm-asset/mediaelement (4.2.6): Loading from cache
+  - Installing npm-asset/vanilla-fitvids (1.1.0): Loading from cache
+  - Installing bower-asset/mention (dev-master 1b588ef): Cloning 1b588ef059
+  - Installing mapkyca/known-mongo-php-library (dev-master 34b1ddc): Cloning 34b1ddcf81
+  - Installing mf2/mf2 (0.4.6): Loading from cache
+  - Installing indieweb/mention-client (1.2.0): Downloading (100%)
+  - Installing symfony/polyfill-ctype (v1.11.0): Downloading (100%)
+  - Installing twig/twig (v2.11.0): Downloading (100%)
+  - Installing mapkyca/php-ogp (1.0.1): Downloading (100%)
+  - Installing squizlabs/php_codesniffer (3.4.1): Downloading (100%)
+  - Installing mapkyca/known-phpcs (1.0.2): Downloading (100%)
+  - Installing mapkyca/known-language-tools (1.0.3): Downloading (100%)
+symfony/class-loader suggests installing symfony/polyfill-apcu (For using ApcClassLoader on HHVM)
+symfony/event-dispatcher-contracts suggests installing psr/event-dispatcher
+symfony/event-dispatcher suggests installing symfony/dependency-injection
+symfony/event-dispatcher suggests installing symfony/http-kernel
+symfony/service-contracts suggests installing psr/container
+symfony/service-contracts suggests installing symfony/service-implementation
+symfony/console suggests installing symfony/lock
+symfony/console suggests installing symfony/process
+symfony/polyfill-intl-idn suggests installing ext-intl (For best performance)
+simplepie/simplepie suggests installing ext-intl
+mf2/mf2 suggests installing barnabywalters/mf-cleaner (To more easily handle the canonical data php-mf2 gives you)
+mf2/mf2 suggests installing masterminds/html5 (Alternative HTML parser for PHP, for better HTML5 support.)
+Writing lock file
+Generating autoload files

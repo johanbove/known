@@ -29,3 +29,41 @@ if (!empty($user) && !empty($object)) {
     unset($this->vars['action']);
 }
 
+if (\Idno\Core\Idno::site()->currentPage()->isPermalink()
+    && !empty($object)
+    && ($object->access == 'PUBLIC')
+) {
+?>
+<style>
+.webmention-url-form {
+   display: none;
+}
+body.idno_pages_entity_view .webmention-url-form {
+   display: block;
+}
+.webmention-url-form form {
+opacity: 0.5;
+transition: opacity .2s;
+}
+.webmention-url-form:focus form,
+.webmention-url-form:hover form{
+opacity: 1;
+}
+</style>
+<div class="row annotation-add webmention-url-form" style="margin-bottom:15px;">
+   <div class="col-md-12 idno-comment-container">
+     <p><em><?php echo \Idno\Core\Idno::site()->language()->_('Did you write a <a href="https://indieweb.org/responses" rel="noopener">response</a> to this post? Let me know the URL:'); ?></em></p>
+     <form action="<?php echo \Idno\Core\Idno::site()->config()->getDisplayURL()?>webmention" method="post">
+        <div class="input-group">
+           <input class="form-control" name="source" type="url" required placeholder="<?php echo \Idno\Core\Idno::site()->language()->_('Your URL'); ?>">
+           <div class="input-group-btn">
+              <input class="btn btn-default" type="submit" value="<?php echo \Idno\Core\Idno::site()->language()->_('Send Webmention'); ?>">
+           </div>
+        </div>
+        <input type="hidden" name="content-type" value="html">
+        <input type="hidden" name="target" value="<?php echo $object->getDisplayURL()?>">
+     </form>
+   </div>
+</div>
+<?php
+}

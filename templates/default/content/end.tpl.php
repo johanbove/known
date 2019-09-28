@@ -29,7 +29,7 @@ if (!empty($owner)) {
             <?php
 
             if ($vars['object']->access != 'PUBLIC') {
-                ?><i class="fa fa-lock"> </i><?php
+                ?><i class="fa fa-lock" title="<?php echo \Idno\Core\Idno::site()->language()->_('private'); ?>"> </i><?php
             }
 
             ?>
@@ -53,7 +53,7 @@ if (!empty($owner)) {
             <?php
             if (!$has_liked) {
                 $star = \Idno\Core\Idno::site()->language()->_('Star this!');
-                $heart_only = '<i class="far fa-star" title="'.$star.'"></i>';
+                $heart_only = '<i class="fa fa-star-o" title="'.$star.'"></i>';
             } else {
                 $heart_only = '<i class="fa fa-star"></i>';
             }
