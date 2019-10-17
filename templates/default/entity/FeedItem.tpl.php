@@ -8,8 +8,8 @@
 <div class="row idno-entry idno-entry-<?php
 if (preg_match('@\\\\([\w]+)$@', get_class($item), $matches)) {
     echo strtolower($matches[1]);
-}?>">
-
+}?>
+ idno-access-<?php echo $item->access ?> ">
     <div class="col-md-1 col-md-offset-1 owner h-card hidden-sm">
         <p>
             <a href="<?php echo $item->getAuthorURL() ?>" class="u-url icon-container"><img class="u-photo"
