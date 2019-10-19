@@ -537,9 +537,11 @@ namespace Idno\Common {
         function publish()
         {
             \Idno\Core\Idno::site()->events()->triggerEvent('publish', ['object' => &$this]);
-            if ($this->save() && ($this->getPublishStatus() == 'published')) {
-                $this->syndicate();
-                \Idno\Core\Idno::site()->events()->triggerEvent('published', ['object' => &$this]);
+            if ($this->save()) {
+                if ($this->getPublishStatus() == 'published') {
+                    $this->syndicate();
+                    \Idno\Core\Idno::site()->events()->triggerEvent('published', ['object' => &$this]);
+                }
 
                 return true;
             }
@@ -549,7 +551,7 @@ namespace Idno\Common {
 
         /**
          * Set the published status of this object, for use with searches.
-         * @param string $status The status, default "published". Other values may be "draft" or "scheduled".
+         * @param string $status The status, default "published". Can be "unlisted". Other values may be "draft" or "scheduled".
          */
         public function setPublishStatus($status = 'published')
         {
@@ -583,6 +585,7 @@ namespace Idno\Common {
             $access = $this->getAccess();
 
             if ($access == 'PUBLIC') return true;
+            if ($access == 'UNLISTED') return true;
             if ($access == 'SITE' && \Idno\Core\Idno::site()->session()->isLoggedIn()) return true;
             if ($this->getOwnerID() == $user_id) return true;
 
@@ -1045,6 +1048,9 @@ namespace Idno\Common {
             if ($access == 'PUBLIC') {
                 $this->access = 'PUBLIC';
             }
+            if ($access == 'UNLISTED') {
+                $this->access = 'UNLISTED';
+            }
             if ($access == 'SITE') {
                 $this->access = 'SITE';
             }
@@ -1470,7 +1476,7 @@ namespace Idno\Common {
             if ($this->getOwnerID() == $user_id) return true;
 
             // Check against access groups
-            if ($this->getPublishStatus() == 'published') {
+            if ($this->getPublishStatus() == 'published' || $this->getPublishStatus() == 'unlisted') {
                 $access = $this->getAccess();
                 if ($access instanceof \Idno\Entities\AccessGroup) {
 
@@ -1507,6 +1513,7 @@ namespace Idno\Common {
             $access = $this->getAccess();
 
             if ($access == 'PUBLIC') return true;
+            if ($access == 'UNLISTED') return true;
             if ($access == 'SITE' && \Idno\Core\Idno::site()->session()->isLoggedIn()) return true;
             if ($this->getOwnerID() == $user_id) return true;
 
@@ -1543,11 +1550,21 @@ namespace Idno\Common {
         function getAccess($idOnly = false)
         {
             $access = $this->access;
-            if (!$idOnly && $access != 'PUBLIC' && $access != 'SITE') {
+            if (!$idOnly && $access != 'PUBLIC' && $access != 'UNLISTED' && $access != 'SITE') {
                 $access = \Idno\Core\Idno::site()->db()->getObject($access);
             }
 
             return $access;
+        }
+
+        /**
+         * Is this entity unlisted?
+         * @return bool
+         */
+        function isUnlisted()
+        {
+            $access = $this->getAccess();
+            return ($access == 'UNLISTED');
         }
 
         /**
