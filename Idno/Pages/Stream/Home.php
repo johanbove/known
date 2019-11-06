@@ -9,13 +9,13 @@ namespace Idno\Pages\Stream {
 
         function getContent()
         {
-            if ($items = Feed::get()) {
+            if ($feeds = Feed::get()) {
 
                 $t = \Idno\Core\Idno::site()->template();
                 $t->__(array(
                     'title' => 'Stream',
                     'body'  => $t->__(array(
-                        'items' => $items
+                        'feeds' => $feeds
                     ))->draw('stream/home')
                 ))->drawPage();
 
