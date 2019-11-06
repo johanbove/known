@@ -2,15 +2,14 @@
 
 namespace Idno\Pages\Stream {
 
-    use Idno\Entities\Reader\FeedItem;
+    use Idno\Entities\Reader\Feed;
 
     class Home extends \Idno\Common\Page
     {
 
         function getContent()
         {
-
-            if ($items = FeedItem::get()) {
+            if ($items = Feed::get()) {
 
                 $t = \Idno\Core\Idno::site()->template();
                 $t->__(array(
