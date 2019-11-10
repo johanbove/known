@@ -26,6 +26,8 @@ namespace Idno\Pages\Webmentions {
 
             parse_str(trim(file_get_contents("php://input")), $vars);
 
+            $contentType = $vars['content-type'];
+
             // Check that both source and target are non-empty
             if (!empty($vars['source']) && !empty($vars['target']) && $vars['source'] != $vars['target']) {
 
@@ -69,13 +71,21 @@ namespace Idno\Pages\Webmentions {
                                 $source_mf2 = \Idno\Core\Webmention::parseContent($source_response['content'], $source);
                                 // Set source and target information as input variables
                                 $page->setPermalink();
-                                if ($page->webmentionContent($source, $target, $source_response, $source_mf2)) {
+                                if ($webmentionContent = $page->webmentionContent($source, $target, $source_response, $source_mf2)) {
                                     $this->setResponse(202); // Webmention received a-ok.
+                                    if (!empty($contentType) && $contentType == 'html') {
+                                        echo 'Webmention received a-ok!';
+                                    }
+                                     \Idno\Core\Idno::site()->logging()->debug('webmention received a-ok: ' . $source . ' to ' . $target);
                                     exit;
                                 } else {
                                     $error      = 'source_not_supported';
                                     $error_text = 'Could not interpret source as a comment.';
+                                    \Idno\Core\Idno::site()->logging()->debug('webmention source_not_supported: ' . $source . ' to ' . $target);
                                 }
+                                var_dump($source);
+                                var_dump($target);
+                                var_dump($webmentionContent);
                             } else {
                                 $error      = 'no_link_found';
                                 $error_text = 'The source URI does not contain a link to the target URI.';

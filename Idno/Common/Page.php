@@ -708,7 +708,25 @@ namespace Idno\Common {
          */
         function webmentionContent($source, $target, $source_response, $source_mf2)
         {
-            return false;
+            if (!empty($target)) {
+                $object = \Idno\Common\Entity::getByID($target);
+                if (empty($object)) {
+                    $object = \Idno\Common\Entity::getBySlug($target);
+                }
+            }
+            if (empty($object)) {
+                \Idno\Core\Idno::site()->logging()->error("No object was found with ID {$target}.");
+
+                return false;
+            }
+
+            $return = true;
+
+            if ($target instanceof \Idno\Common\Entity && $source != $target && $target != $object->getObjectURL()) {
+                $return = $object->addWebmentions($source, $target, $source_content, $source_mf2);
+            }
+
+            return $return;
         }
 
         /**
